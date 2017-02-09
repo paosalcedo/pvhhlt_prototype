@@ -7,6 +7,9 @@ public class Enemy : MonoBehaviour {
 
 	GameObject enemyCtrl;
 	GameObject enemyMgr;
+	SpriteRenderer enemySprite;
+	GameObject deathEffect;
+	ParticleSystem deathParticles;
 
 	public GameObject enemyManager;
 	public float speed;
@@ -15,9 +18,15 @@ public class Enemy : MonoBehaviour {
 	bool isGrounded;
 
 	void Start () {
+		enemySprite = GetComponent<SpriteRenderer> ();
+		deathEffect = GameObject.Find("DeathEffect");
+		deathParticles = deathEffect.GetComponent<ParticleSystem> ();
+
 		isGrounded = false;
 		enemyCtrl = GameObject.Find ("EnemyManager");
 		rb = GetComponent<Rigidbody2D> ();
+		deathEffect.SetActive (true);
+
 	}
 	
 	// Update is called once per frame
@@ -64,8 +73,9 @@ public class Enemy : MonoBehaviour {
 
 		if (coll.gameObject.tag == "Bullet") {
 			//GameObject.Find("EnemyManager").SendMessage("SpawnEnemy");
-			Destroy (coll.gameObject);	
-			Destroy (gameObject);
+			Destroy (coll.gameObject);
+			BulletEffect ();
+			//Destroy (gameObject);
 		}
 
 		//Vivi's original code that kills enemy upon landing
@@ -86,4 +96,17 @@ public class Enemy : MonoBehaviour {
 			//Destroy (gameObject);
 		}
 	}
+
+	void BulletEffect()
+	{
+		enemySprite.enabled = false;
+		deathParticles.Play ();
+		Invoke ("DelayedDeath", 5f);	
+	}
+
+	void DelayedDeath()
+	{
+		Destroy(gameObject);
+	}
 }
+

@@ -144,4 +144,6 @@ public class Head : MonoBehaviour {
 			Clone.GetComponent<Rigidbody2D> ().AddForce(Vector2.right*1000);
 		}
 	}
+
+
 }

@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
+	AudioSource bang;
+
 	// Use this for initialization
 	void Start () {
-		
+		bang = GetComponent<AudioSource> ();
+		bang.Play ();
 	}
 	
 	// Update is called once per frame
@@ -19,4 +22,6 @@ public class Bullet : MonoBehaviour {
 			Destroy (gameObject);
 		}
 	}
+
+
 }
