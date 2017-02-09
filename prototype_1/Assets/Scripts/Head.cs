@@ -18,9 +18,12 @@ public class Head : MonoBehaviour {
 	private float dist = 0.19f;
 	public GameObject bulletPrefab;
 	public ParticleSystem child;
-
+	GameObject bang;
+	AudioSource bangSound;
 
 	void Start () {
+		bang = GameObject.Find ("BulletSoundHolder"); 
+		bangSound = bang.GetComponent<AudioSource> ();
 		animator = GetComponent<Animator> ();
 		rb = GetComponent<Rigidbody2D> ();
 		bc = GetComponent<BoxCollider2D> ();
@@ -113,6 +116,8 @@ public class Head : MonoBehaviour {
 					foot.GetComponent<Foot> ().SendMessage ("UnsetCombined");
 				} else {
 					FireBullet ();
+					bangSound.Play ();
+
 				}
 			}
 				
